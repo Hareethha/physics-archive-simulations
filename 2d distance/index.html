@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Distance & Displacement in 2D</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<div class="page">
+
+  <header class="hero">
+
+    <div class="eyebrow">
+      The Physics Archive · Kinematics
+    </div>
+
+    <h1>
+      Distance & Displacement in 2D
+    </h1>
+
+    <p>
+      Drag the object through the four quadrants.
+      Compare the complete path travelled with the straight-line
+      displacement from the starting point.
+    </p>
+
+  </header>
+
+
+  <main class="layout">
+
+    <!-- LEFT SIDE -->
+
+    <aside class="panel controls">
+
+      <h2>Journey Controls</h2>
+
+      <button id="newJourneyBtn" class="primary">
+        Start New Journey Here
+      </button>
+
+      <button id="resetBtn">
+        Reset
+      </button>
+
+      <button id="hidePathBtn">
+        Hide Distance Path
+      </button>
+
+
+      <div class="instruction-card">
+
+        <strong>Try this</strong>
+
+        <p>
+          Drag the object around several quadrants,
+          then return it to the starting point.
+        </p>
+
+        <p>
+          Watch what happens to distance and displacement.
+        </p>
+
+      </div>
+
+
+      <div class="legend-card">
+
+        <h3>Visual Key</h3>
+
+        <div class="legend-row">
+          <span class="dot start-dot"></span>
+          Starting position
+        </div>
+
+        <div class="legend-row">
+          <span class="line path-line"></span>
+          Distance travelled
+        </div>
+
+        <div class="legend-row">
+          <span class="line displacement-line"></span>
+          Displacement
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- SIMULATION -->
+
+    <section class="panel simulation-panel">
+
+      <div class="top-pills">
+
+        <div class="pill">
+          <span>Start</span>
+          <strong id="startReadout">
+            (−5.0, −3.0)
+          </strong>
+        </div>
+
+        <div class="pill">
+          <span>Current</span>
+          <strong id="currentReadout">
+            (−5.0, −3.0)
+          </strong>
+        </div>
+
+        <div class="pill">
+          <span>Quadrant</span>
+          <strong id="quadrantReadout">
+            III
+          </strong>
+        </div>
+
+      </div>
+
+
+      <canvas
+        id="simCanvas"
+        width="1000"
+        height="700"
+      ></canvas>
+
+
+      <p class="drag-note">
+        Drag the pink object anywhere on the coordinate plane.
+      </p>
+
+    </section>
+
+
+    <!-- RIGHT SIDE -->
+
+    <aside class="panel readouts">
+
+      <h2>Live Measurements</h2>
+
+
+      <div class="readout pink">
+
+        <span>Distance travelled</span>
+
+        <strong id="distanceReadout">
+          0.00 m
+        </strong>
+
+        <p>
+          Total length of the path followed.
+        </p>
+
+      </div>
+
+
+      <div class="readout cream">
+
+        <span>Displacement vector</span>
+
+        <strong id="vectorReadout">
+          Δr = (0.00, 0.00) m
+        </strong>
+
+        <div class="equation">
+          Δr = r<sub>f</sub> − r<sub>i</sub>
+        </div>
+
+      </div>
+
+
+      <div class="readout">
+
+        <span>Horizontal change</span>
+
+        <strong id="dxReadout">
+          Δx = 0.00 m
+        </strong>
+
+      </div>
+
+
+      <div class="readout">
+
+        <span>Vertical change</span>
+
+        <strong id="dyReadout">
+          Δy = 0.00 m
+        </strong>
+
+      </div>
+
+
+      <div class="readout">
+
+        <span>Magnitude of displacement</span>
+
+        <strong id="magnitudeReadout">
+          |Δr| = 0.00 m
+        </strong>
+
+        <div class="equation">
+          |Δr| = √(Δx² + Δy²)
+        </div>
+
+      </div>
+
+
+      <div class="readout emphasis">
+
+        <span>What should you notice?</span>
+
+        <p id="teachingReadout">
+          Before the object moves, both distance and displacement are zero.
+        </p>
+
+      </div>
+
+    </aside>
+
+  </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
