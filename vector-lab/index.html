@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Vector Laboratory</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<div class="page">
+
+  <header class="hero">
+
+    <div class="eyebrow">
+      The Physics Archive · Kinematics
+    </div>
+
+    <h1>Vector Laboratory</h1>
+
+    <p>
+      Draw vectors, add them head-to-tail, resolve them into components,
+      reconstruct them with trigonometry, and explore vector subtraction —
+      all on the same coordinate plane.
+    </p>
+
+  </header>
+
+
+  <!-- MODE BAR -->
+
+  <nav class="mode-bar" aria-label="Vector simulation modes">
+
+    <button class="mode-button active" data-mode="draw">
+      1 · Draw a Vector
+    </button>
+
+    <button class="mode-button" data-mode="addition">
+      2 · Head-to-Tail Addition
+    </button>
+
+    <button class="mode-button" data-mode="components">
+      3 · Components
+    </button>
+
+    <button class="mode-button" data-mode="resolve">
+      4 · Resolve with Trig
+    </button>
+
+    <button class="mode-button" data-mode="componentAddition">
+      5 · Add by Components
+    </button>
+
+    <button class="mode-button" data-mode="subtract">
+      6 · Subtraction
+    </button>
+
+  </nav>
+
+
+  <main class="layout">
+
+    <!-- LEFT PANEL -->
+
+    <aside class="panel controls-panel">
+
+      <div class="mode-title">
+
+        <div class="eyebrow">
+          Current Mode
+        </div>
+
+        <h2 id="modeTitle">
+          Draw a Vector
+        </h2>
+
+        <p id="modeDescription">
+          Drag the head of vector A. Its length gives the magnitude
+          and its arrowhead gives its direction.
+        </p>
+
+      </div>
+
+
+      <!-- GENERIC VECTOR A -->
+
+      <section class="control-group" id="vectorAControls">
+
+        <h3>Vector A</h3>
+
+        <label>
+          Magnitude
+          <strong id="aMagnitudeValue">5.00</strong>
+        </label>
+
+        <input
+          id="aMagnitude"
+          type="range"
+          min="0"
+          max="9"
+          step="0.1"
+          value="5"
+        />
+
+
+        <label>
+          Angle from +x
+          <strong id="aAngleValue">36.9°</strong>
+        </label>
+
+        <input
+          id="aAngle"
+          type="range"
+          min="0"
+          max="359"
+          step="1"
+          value="37"
+        />
+
+      </section>
+
+
+      <!-- VECTOR B -->
+
+      <section class="control-group" id="vectorBControls">
+
+        <h3>Vector B</h3>
+
+        <label>
+          Magnitude
+          <strong id="bMagnitudeValue">4.00</strong>
+        </label>
+
+        <input
+          id="bMagnitude"
+          type="range"
+          min="0"
+          max="9"
+          step="0.1"
+          value="4"
+        />
+
+
+        <label>
+          Angle from +x
+          <strong id="bAngleValue">90.0°</strong>
+        </label>
+
+        <input
+          id="bAngle"
+          type="range"
+          min="0"
+          max="359"
+          step="1"
+          value="90"
+        />
+
+      </section>
+
+
+      <!-- RESOLUTION OPTIONS -->
+
+      <section class="control-group" id="resolutionControls">
+
+        <h3>Angle Convention</h3>
+
+        <div class="segmented">
+
+          <button
+            class="angle-reference active"
+            data-angle-ref="x"
+          >
+            Angle from +x
+          </button>
+
+          <button
+            class="angle-reference"
+            data-angle-ref="y"
+          >
+            Angle from +y
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- DISPLAY OPTIONS -->
+
+      <section class="control-group">
+
+        <h3>Display</h3>
+
+        <label class="check-row">
+          <input id="showGrid" type="checkbox" checked />
+          Coordinate grid
+        </label>
+
+        <label class="check-row">
+          <input id="showComponents" type="checkbox" checked />
+          Component projections
+        </label>
+
+        <label class="check-row">
+          <input id="showLabels" type="checkbox" checked />
+          Vector labels
+        </label>
+
+        <label class="check-row">
+          <input id="showAngles" type="checkbox" checked />
+          Angle arc
+        </label>
+
+      </section>
+
+
+      <!-- PRESETS -->
+
+      <section class="control-group presets">
+
+        <h3>Worked Examples</h3>
+
+        <button id="preset345">
+          3 m East + 4 m North
+        </button>
+
+        <button id="presetForce">
+          20 N at 30°
+        </button>
+
+        <button id="presetWalk">
+          10 m at 30° + 12 m West
+        </button>
+
+        <button id="presetVelocity">
+          6 m/s East → 6 m/s North
+        </button>
+
+      </section>
+
+
+      <button id="resetBtn" class="reset-button">
+        Reset Laboratory
+      </button>
+
+    </aside>
+
+
+    <!-- CENTRE -->
+
+    <section class="panel simulation-panel">
+
+      <div class="canvas-pills">
+
+        <div class="pill">
+          <span>A</span>
+          <strong id="pillA">(4.00, 3.00)</strong>
+        </div>
+
+        <div class="pill" id="pillBBox">
+          <span>B</span>
+          <strong id="pillB">(0.00, 4.00)</strong>
+        </div>
+
+        <div class="pill" id="pillResultBox">
+          <span>Result</span>
+          <strong id="pillResult">—</strong>
+        </div>
+
+      </div>
+
+
+      <canvas
+        id="vectorCanvas"
+        width="1000"
+        height="760"
+      ></canvas>
+
+
+      <div class="canvas-help" id="canvasHelp">
+        Drag the circular handle at the head of vector A.
+      </div>
+
+    </section>
+
+
+    <!-- RIGHT -->
+
+    <aside class="panel readout-panel">
+
+      <h2>Live Mathematics</h2>
+
+
+      <div class="readout pink">
+
+        <span class="readout-heading">
+          Vector A
+        </span>
+
+        <strong id="aVectorReadout">
+          A = (4.00, 3.00)
+        </strong>
+
+        <p id="aMagnitudeReadout">
+          |A| = 5.00
+        </p>
+
+      </div>
+
+
+      <div class="readout" id="componentsReadout">
+
+        <span class="readout-heading">
+          Components
+        </span>
+
+        <strong id="axReadout">
+          Aₓ = 4.00
+        </strong>
+
+        <strong id="ayReadout">
+          Aᵧ = 3.00
+        </strong>
+
+      </div>
+
+
+      <div class="readout cream" id="trigReadout">
+
+        <span class="readout-heading">
+          Resolution
+        </span>
+
+        <div id="trigFormulaX">
+          Aₓ = A cos θ
+        </div>
+
+        <div id="trigFormulaY">
+          Aᵧ = A sin θ
+        </div>
+
+      </div>
+
+
+      <div class="readout" id="resultReadout">
+
+        <span class="readout-heading">
+          Resultant
+        </span>
+
+        <strong id="resultVectorReadout">
+          —
+        </strong>
+
+        <p id="resultMagnitudeReadout">
+          —
+        </p>
+
+        <p id="resultDirectionReadout">
+          —
+        </p>
+
+      </div>
+
+
+      <div class="readout emphasis">
+
+        <span class="readout-heading">
+          What should you notice?
+        </span>
+
+        <p id="teachingReadout">
+          A vector needs both magnitude and direction.
+        </p>
+
+      </div>
+
+    </aside>
+
+  </main>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
