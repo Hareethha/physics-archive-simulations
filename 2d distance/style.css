@@ -1,0 +1,510 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #fff8fb;
+  --white: #fffefe;
+  --cream: #fff7eb;
+
+  --pink-light: #fff0f6;
+  --pink: #f3c3d6;
+  --pink-deep: #cf88a7;
+
+  --plum: #684454;
+  --dark: #442c37;
+
+  --muted: #876a77;
+  --border: #e8bfd0;
+
+  --shadow:
+    0 14px 35px rgba(104, 68, 84, 0.10);
+}
+
+body {
+  margin: 0;
+
+  font-family:
+    "Trebuchet MS",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  color: var(--dark);
+
+  background:
+    radial-gradient(
+      circle at top left,
+      #fffefe,
+      #fff3f8 50%,
+      #fff9fb
+    );
+
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 26px;
+}
+
+
+/* HEADER */
+
+.hero {
+  padding: 27px 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffefe,
+      #fff2f7,
+      #fff8ee
+    );
+
+  border: 1.5px solid var(--border);
+  border-radius: 28px;
+
+  box-shadow: var(--shadow);
+
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  color: var(--pink-deep);
+
+  font-size: 0.75rem;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  margin-bottom: 5px;
+}
+
+.hero h1 {
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-weight: 500;
+
+  font-size:
+    clamp(2rem, 4vw, 3rem);
+
+  color: var(--dark);
+
+  margin: 0 0 8px;
+}
+
+.hero p {
+  max-width: 850px;
+
+  color: var(--muted);
+
+  margin: 0;
+}
+
+
+/* GRID */
+
+.layout {
+  display: grid;
+
+  grid-template-columns:
+    270px
+    minmax(600px, 1fr)
+    290px;
+
+  gap: 17px;
+
+  align-items: start;
+}
+
+.panel {
+  background: rgba(255,255,255,0.96);
+
+  border: 1.5px solid var(--border);
+
+  border-radius: 24px;
+
+  padding: 15px;
+
+  box-shadow: var(--shadow);
+}
+
+
+/* CONTROLS */
+
+h2 {
+  margin: 2px 0 14px;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 1.2rem;
+
+  font-weight: 500;
+
+  color: var(--plum);
+}
+
+button {
+  width: 100%;
+
+  margin-bottom: 9px;
+
+  min-height: 44px;
+
+  padding: 10px 14px;
+
+  border: 1.5px solid var(--pink);
+
+  border-radius: 999px;
+
+  color: var(--dark);
+
+  background:
+    linear-gradient(
+      180deg,
+      #fffefe,
+      #fff0f6
+    );
+
+  font: inherit;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ffe8f1;
+}
+
+button.primary {
+  color: white;
+
+  border-color: var(--pink-deep);
+
+  background:
+    linear-gradient(
+      180deg,
+      #dc9bb6,
+      #c981a0
+    );
+}
+
+.instruction-card,
+.legend-card {
+  margin-top: 17px;
+
+  padding: 13px;
+
+  border-radius: 17px;
+
+  border: 1px solid #efd2de;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fffefe,
+      #fff6fa
+    );
+}
+
+.instruction-card p {
+  color: var(--muted);
+
+  font-size: 0.88rem;
+
+  margin: 7px 0;
+}
+
+.legend-card h3 {
+  margin: 0 0 11px;
+
+  font-family: Georgia, serif;
+
+  color: var(--plum);
+
+  font-weight: 500;
+}
+
+.legend-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin: 9px 0;
+
+  color: var(--muted);
+
+  font-size: 0.88rem;
+}
+
+.dot {
+  width: 13px;
+  height: 13px;
+
+  border-radius: 50%;
+
+  display: inline-block;
+}
+
+.start-dot {
+  background: var(--cream);
+
+  border: 2px solid var(--plum);
+}
+
+.line {
+  width: 27px;
+  height: 4px;
+
+  border-radius: 4px;
+
+  display: inline-block;
+}
+
+.path-line {
+  background: var(--pink-deep);
+}
+
+.displacement-line {
+  background: var(--plum);
+}
+
+
+/* CANVAS */
+
+.simulation-panel {
+  padding: 13px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fffefe,
+      #fff8fb
+    );
+}
+
+.top-pills {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-bottom: 10px;
+}
+
+.pill {
+  min-width: 120px;
+
+  padding: 7px 11px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 14px;
+
+  background: var(--pink-light);
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+.pill span {
+  color: var(--muted);
+
+  font-size: 0.72rem;
+}
+
+.pill strong {
+  color: var(--plum);
+}
+
+#simCanvas {
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  background: white;
+
+  border: 1.5px solid var(--border);
+
+  border-radius: 20px;
+
+  cursor: grab;
+
+  touch-action: none;
+}
+
+#simCanvas:active {
+  cursor: grabbing;
+}
+
+.drag-note {
+  margin: 9px 0 0;
+
+  color: var(--muted);
+
+  text-align: center;
+
+  font-size: 0.85rem;
+}
+
+
+/* READOUTS */
+
+.readout {
+  border: 1.5px solid #eed2de;
+
+  border-radius: 17px;
+
+  padding: 12px;
+
+  margin-bottom: 10px;
+
+  background: white;
+}
+
+.readout.pink {
+  background:
+    linear-gradient(
+      180deg,
+      #fff6fa,
+      #ffeef5
+    );
+}
+
+.readout.cream {
+  background:
+    linear-gradient(
+      180deg,
+      #fffaf2,
+      #fff4e5
+    );
+
+  border-color: #ecd9bd;
+}
+
+.readout.emphasis {
+  background:
+    linear-gradient(
+      135deg,
+      #fff0f6,
+      #fff9ef
+    );
+}
+
+.readout span {
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 0.72rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.07em;
+
+  font-weight: 700;
+}
+
+.readout strong {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--dark);
+
+  font-size: 1.15rem;
+}
+
+.readout.pink strong,
+.readout.cream strong {
+  font-family: Georgia, serif;
+
+  font-size: 1.5rem;
+
+  font-weight: 500;
+}
+
+.readout p {
+  margin: 6px 0 0;
+
+  color: var(--muted);
+
+  font-size: 0.85rem;
+}
+
+.equation {
+  margin-top: 6px;
+
+  color: var(--plum);
+
+  font-weight: 700;
+
+  font-size: 0.9rem;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1150px) {
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 10px;
+  }
+
+  .readouts {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 10px;
+  }
+
+  .readouts h2 {
+    grid-column: 1 / -1;
+  }
+
+  .readout {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 650px) {
+
+  .page {
+    padding: 12px;
+  }
+
+  .controls,
+  .readouts {
+    display: block;
+  }
+
+  .readout {
+    margin-bottom: 9px;
+  }
+}
