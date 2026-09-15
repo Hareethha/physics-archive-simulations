@@ -1,0 +1,233 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #fff8fc;
+  --panel: #fffdfb;
+  --panel-soft: #fff3f8;
+  --panel-cream: #fff7ef;
+  --text: #3d2733;
+  --muted: #7b5f6b;
+  --line: #d8a9bb;
+  --line-dark: #7a5060;
+  --accent: #f3bfd4;
+  --accent-2: #f8d7e5;
+  --accent-3: #fde9f1;
+  --button-dark: #6a4353;
+  --button-dark-text: #fffafc;
+  --shadow: rgba(122, 80, 96, 0.12);
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, #fffafc 0%, #fff4f8 35%, #fff8fc 100%);
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.page {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 28px;
+}
+
+.hero {
+  margin-bottom: 22px;
+  padding: 22px 24px;
+  border: 2px solid var(--line);
+  background: linear-gradient(180deg, #fffdfd 0%, #fff5f9 100%);
+  border-radius: 24px;
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.hero h1 {
+  margin: 0 0 10px 0;
+  font-size: 2rem;
+  line-height: 1.2;
+  color: var(--line-dark);
+}
+
+.hero p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 980px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 320px minmax(600px, 1fr) 320px;
+  gap: 18px;
+  align-items: start;
+}
+
+.panel {
+  border: 2px solid var(--line);
+  background: var(--panel);
+  padding: 16px;
+  border-radius: 24px;
+  box-shadow: 0 10px 24px var(--shadow);
+}
+
+.controls-panel,
+.readout-panel {
+  min-height: 300px;
+}
+
+.control-group {
+  margin-bottom: 22px;
+  padding: 14px;
+  background: linear-gradient(180deg, #fffdfd 0%, #fff7fb 100%);
+  border: 1.5px solid #efc9d8;
+  border-radius: 18px;
+}
+
+.control-group h2,
+.readout-panel h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.08rem;
+  color: var(--line-dark);
+}
+
+.helper {
+  margin-top: 8px;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.segmented,
+.motion-buttons,
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 2px solid var(--line);
+  background: linear-gradient(180deg, #fffefe 0%, #fff0f7 100%);
+  color: var(--text);
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 999px;
+  transition: 0.18s ease;
+  box-shadow: 0 4px 10px rgba(122, 80, 96, 0.08);
+}
+
+button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #fff7fb 0%, #ffe9f3 100%);
+}
+
+button.active {
+  background: linear-gradient(180deg, #7a5060 0%, #5f3948 100%);
+  color: var(--button-dark-text);
+  border-color: #5f3948;
+}
+
+.slider-label {
+  display: block;
+  margin: 12px 0 8px 0;
+  font-weight: 700;
+  color: var(--line-dark);
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: #c980a1;
+}
+
+.sim-panel {
+  padding: 14px;
+  background: linear-gradient(180deg, #fffdfd 0%, #fff8fb 100%);
+}
+
+.canvas-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.badge {
+  border: 2px solid var(--line);
+  background: linear-gradient(180deg, #fffefe 0%, #fff2f8 100%);
+  padding: 8px 12px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border-radius: 999px;
+  color: var(--line-dark);
+}
+
+#simCanvas {
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--line);
+  display: block;
+  background: linear-gradient(180deg, #fffefd 0%, #fff5f9 100%);
+  border-radius: 22px;
+  touch-action: none;
+  cursor: grab;
+}
+
+#simCanvas:active {
+  cursor: grabbing;
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  font-size: 0.92rem;
+  color: var(--muted);
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: #fff5fa;
+  border: 1px solid #efcfdd;
+}
+
+.readout-panel h2 {
+  margin-bottom: 14px;
+}
+
+.readout-card {
+  border: 2px solid #ecc5d5;
+  background: linear-gradient(180deg, #fffefe 0%, #fff6fa 100%);
+  padding: 13px;
+  margin-bottom: 12px;
+  border-radius: 18px;
+}
+
+.readout-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: var(--line-dark);
+}
+
+.readout-card p {
+  margin: 0;
+}
+
+.big-math {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #5f3948;
+}
+
+.readout-card.emphasis {
+  background: linear-gradient(180deg, #fff1f7 0%, #ffeaf4 100%);
+  border-color: #dca9bf;
+}
+
+@media (max-width: 1250px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
