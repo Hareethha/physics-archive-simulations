@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Distance & Displacement Journey Lab</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="eyebrow">The Physics Archive · Kinematics</div>
+
+    <h1>Distance & Displacement</h1>
+
+    <p>
+      Follow one object through a journey and compare
+      <strong>how much ground it covers</strong>
+      with
+      <strong>how far it finishes from where it started</strong>.
+    </p>
+  </header>
+
+
+  <main class="layout">
+
+    <!-- LEFT CONTROLS -->
+    <aside class="panel controls-panel">
+
+      <section class="control-group">
+        <h2>Journey Presets</h2>
+
+        <button class="preset-button" data-preset="direct">
+          Direct Journey
+          <span>−3 → +5</span>
+        </button>
+
+        <button class="preset-button" data-preset="turn">
+          Turn Around
+          <span>−3 → +5 → +1</span>
+        </button>
+
+        <button class="preset-button" data-preset="round">
+          Round Trip
+          <span>−3 → +5 → −3</span>
+        </button>
+
+        <p class="helper">
+          Watch what happens to distance and displacement when the cart reverses.
+        </p>
+      </section>
+
+
+      <section class="control-group">
+        <h2>Build Your Own Journey</h2>
+
+        <label for="targetSlider">
+          Move next to
+          <strong id="targetValue">x = +5.0 m</strong>
+        </label>
+
+        <input
+          id="targetSlider"
+          type="range"
+          min="-9"
+          max="9"
+          step="0.5"
+          value="5"
+        />
+
+        <button id="moveTargetBtn" class="primary-button">
+          Move to Target
+        </button>
+
+        <button id="newStartBtn">
+          Make Current Position the New Start
+        </button>
+      </section>
+
+
+      <section class="control-group">
+        <h2>Coordinate Convention</h2>
+
+        <div class="segmented">
+          <button
+            class="direction-button active"
+            data-positive="right"
+          >
+            Right is +
+          </button>
+
+          <button
+            class="direction-button"
+            data-positive="left"
+          >
+            Left is +
+          </button>
+        </div>
+
+        <label class="origin-label" for="originSlider">
+          Move the origin
+        </label>
+
+        <input
+          id="originSlider"
+          type="range"
+          min="-5"
+          max="5"
+          step="0.5"
+          value="0"
+        />
+
+        <p class="helper">
+          Changing the origin changes position coordinates.
+          Changing the positive direction changes their signs.
+          The physical journey does not change.
+        </p>
+      </section>
+
+
+      <section class="control-group">
+        <h2>Playback</h2>
+
+        <div class="action-row">
+          <button id="pauseBtn">Pause</button>
+          <button id="resetBtn">Reset</button>
+        </div>
+
+        <button id="hideRouteBtn">
+          Hide Journey History
+        </button>
+      </section>
+
+    </aside>
+
+
+    <!-- CENTRE SIMULATION -->
+    <section class="panel simulation-panel">
+
+      <div class="canvas-topbar">
+
+        <div class="pill">
+          <span>Start</span>
+          <strong id="topStart">−3.0 m</strong>
+        </div>
+
+        <div class="pill">
+          <span>Current</span>
+          <strong id="topCurrent">−3.0 m</strong>
+        </div>
+
+        <div class="pill">
+          <span>Positive direction</span>
+          <strong id="topDirection">Right →</strong>
+        </div>
+
+      </div>
+
+
+      <canvas
+        id="journeyCanvas"
+        width="1100"
+        height="570"
+      ></canvas>
+
+
+      <div class="journey-summary">
+
+        <span class="summary-label">
+          Journey
+        </span>
+
+        <div
+          id="journeyText"
+          class="journey-text"
+        >
+          −3.0 m
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- RIGHT READOUTS -->
+    <aside class="panel readout-panel">
+
+      <h2>Live Measurements</h2>
+
+
+      <div class="readout-card pink-card">
+
+        <span class="readout-label">
+          Distance travelled
+        </span>
+
+        <div class="big-value" id="distanceReadout">
+          0.0 m
+        </div>
+
+        <p>
+          Total length of every part of the journey.
+        </p>
+
+      </div>
+
+
+      <div class="readout-card cream-card">
+
+        <span class="readout-label">
+          Displacement
+        </span>
+
+        <div class="big-value" id="displacementReadout">
+          0.0 m
+        </div>
+
+        <div class="formula">
+          Δx = x<sub>f</sub> − x<sub>i</sub>
+        </div>
+
+      </div>
+
+
+      <div class="readout-card">
+
+        <span class="readout-label">
+          Magnitude of displacement
+        </span>
+
+        <div class="medium-value" id="magnitudeReadout">
+          |Δx| = 0.0 m
+        </div>
+
+      </div>
+
+
+      <div class="readout-card">
+
+        <span class="readout-label">
+          Relationship
+        </span>
+
+        <div class="relationship" id="relationshipReadout">
+          d = |Δx|
+        </div>
+
+        <p id="relationshipExplanation">
+          No extra ground has been retraced.
+        </p>
+
+      </div>
+
+
+      <div class="readout-card emphasis-card">
+
+        <span class="readout-label">
+          What should you notice?
+        </span>
+
+        <p id="teachingReadout">
+          Distance and displacement are both zero before the journey begins.
+        </p>
+
+      </div>
+
+    </aside>
+
+  </main>
+
+
+  <!-- ENDPOINT EXPERIMENT -->
+
+  <section class="endpoint-section panel">
+
+    <div class="endpoint-heading">
+
+      <div>
+        <div class="eyebrow">
+          Endpoint Experiment
+        </div>
+
+        <h2>
+          Can the endpoints tell you the distance travelled?
+        </h2>
+
+        <p>
+          Each journey below begins at −3 m and ends at +1 m.
+          Their displacement is identical. Their distances are not.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="endpoint-grid">
+
+      <button
+        class="endpoint-card"
+        data-endpoint="A"
+      >
+        <span class="route-letter">A</span>
+
+        <strong>
+          −3 → +1
+        </strong>
+
+        <small>
+          Direct
+        </small>
+      </button>
+
+
+      <button
+        class="endpoint-card"
+        data-endpoint="B"
+      >
+        <span class="route-letter">B</span>
+
+        <strong>
+          −3 → +5 → +1
+        </strong>
+
+        <small>
+          One reversal
+        </small>
+      </button>
+
+
+      <button
+        class="endpoint-card"
+        data-endpoint="C"
+      >
+        <span class="route-letter">C</span>
+
+        <strong>
+          −3 → +8 → −5 → +1
+        </strong>
+
+        <small>
+          Several legs
+        </small>
+      </button>
+
+    </div>
+
+
+    <div class="endpoint-message" id="endpointMessage">
+
+      Choose one of the journeys above.
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
