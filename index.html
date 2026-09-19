@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reference Frames & Relative Motion Laboratory</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+<header class="hero">
+  <div class="eyebrow">The Physics Archive · Reference Frames</div>
+  <h1>Reference Frames & Relative Motion Laboratory</h1>
+  <p>One master simulation for frame switching, relative position, relative velocity, train motion, pursuit, delayed start, and graph interpretation. The same motion can be viewed from different observers without resetting the world.</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="frame">Frame Switcher</button>
+  <button class="tab" data-tab="relative">Relative Playground</button>
+  <button class="tab" data-tab="train">Train Lab</button>
+  <button class="tab" data-tab="pursuit">Catching & Separation</button>
+  <button class="tab" data-tab="delayed">Delayed Start</button>
+  <button class="tab" data-tab="graphs">Graph View</button>
+</nav>
+
+<!-- FRAME SWITCHER -->
+<section id="frame" class="tabpane">
+  <main class="layout">
+    <aside class="panel controls">
+      <h2>World setup</h2>
+      <div class="group">
+        <label>Observe from</label>
+        <select id="frameObserver">
+          <option value="ground">Ground</option>
+          <option value="train">Train</option>
+          <option value="passenger">Passenger</option>
+        </select>
+        <label>Train velocity relative to ground <strong id="trainVelLabel"></strong></label>
+        <input id="trainVel" type="range" min="-20" max="20" step="0.5" value="12">
+        <label>Passenger velocity relative to train <strong id="passRelLabel"></strong></label>
+        <input id="passRel" type="range" min="-20" max="20" step="0.5" value="2">
+      </div>
+      <div class="group">
+        <label>Animation time <strong id="frameTimeLabel"></strong></label>
+        <input id="frameTime" type="range" min="0" max="12" step="0.02" value="4">
+        <label class="check"><input id="frameShowCoords" type="checkbox" checked> show coordinates in chosen frame</label>
+      </div>
+      <div class="btncol">
+        <button id="frameForward">Preset: passenger walks to the front</button>
+        <button id="frameBackward">Preset: passenger walks to the rear</button>
+        <button id="frameReset" class="primary">Reset frame lab</button>
+      </div>
+    </aside>
+
+    <section class="panel canvas-card">
+      <div class="pills">
+        <div class="pill"><span>train / ground</span><strong id="pillTrainGround"></strong></div>
+        <div class="pill"><span>passenger / train</span><strong id="pillPassTrain"></strong></div>
+        <div class="pill"><span>passenger / ground</span><strong id="pillPassGround"></strong></div>
+      </div>
+      <div class="graph-title">Ground, train, and passenger</div>
+      <canvas id="frameCanvas" width="920" height="430"></canvas>
+      <div class="callout">Switch the observer. The underlying physical motion stays the same, but the measured coordinates and velocities change.</div>
+    </section>
+
+    <aside class="panel readouts">
+      <h2>Interpretation</h2>
+      <div class="readout pink"><span class="k">Current frame</span><strong id="frameRead"></strong><p id="frameReadText"></p></div>
+      <div class="readout cream"><span class="k">Velocity transformation</span><strong id="frameVelEq"></strong><p>Use <span class="eq">v<sub>A/G</sub> = v<sub>A/B</sub> + v<sub>B/G</sub></span>.</p></div>
+      <div class="readout"><span class="k">Swap-reference check</span><strong id="swapRead"></strong><p>Reversing the order flips the sign: <span class="eq">v<sub>B/A</sub> = -v<sub>A/B</sub></span>.</p></div>
+      <div class="readout emphasis"><span class="k">Teaching cue</span><p id="frameCue"></p></div>
+    </aside>
+  </main>
+</section>
+
+<!-- RELATIVE PLAYGROUND -->
+<section id="relative" class="tabpane hidden">
+  <main class="layout">
+    <aside class="panel controls">
+      <h2>Relative playground</h2>
+      <div class="group">
+        <label>View from</label>
+        <select id="relativeObserver"><option value="ground">Ground</option><option value="A">Object A</option><option value="B">Object B</option></select>
+        <label>Object A position <strong id="relAXLabel"></strong></label><input id="relAX" type="range" min="-20" max="20" step="0.5" value="18">
+        <label>Object B position <strong id="relBXLabel"></strong></label><input id="relBX" type="range" min="-20" max="20" step="0.5" value="7">
+      </div>
+      <div class="group">
+        <label>Object A velocity <strong id="relAVLabel"></strong></label><input id="relAV" type="range" min="-10" max="10" step="0.5" value="3">
+        <label>Object B velocity <strong id="relBVLabel"></strong></label><input id="relBV" type="range" min="-10" max="10" step="0.5" value="3">
+        <label>Elapsed time <strong id="relTimeLabel"></strong></label><input id="relTime" type="range" min="0" max="10" step="0.02" value="0">
+      </div>
+      <div class="btnrow">
+        <button id="relEqual">Preset: same velocity</button>
+        <button id="relDifferent" class="primary">Preset: different velocity</button>
+      </div>
+    </aside>
+
+    <section class="panel canvas-card">
+      <div class="pills">
+        <div class="pill"><span>x<sub>A/B</sub></span><strong id="pillXAB"></strong></div>
+        <div class="pill"><span>v<sub>A/B</sub></span><strong id="pillVAB"></strong></div>
+        <div class="pill"><span>v<sub>B/A</sub></span><strong id="pillVBA"></strong></div>
+      </div>
+      <div class="graph-title">Two objects on one axis</div>
+      <canvas id="relativeCanvas" width="920" height="430"></canvas>
+    </section>
+
+    <aside class="panel readouts">
+      <h2>Live quantities</h2>
+      <div class="readout pink"><span class="k">Relative position</span><strong id="relPosRead"></strong><p>Use <span class="eq">x<sub>A/B</sub> = x<sub>A</sub> - x<sub>B</sub></span>.</p></div>
+      <div class="readout cream"><span class="k">Relative velocity</span><strong id="relVelRead"></strong><p>Use <span class="eq">v<sub>A/B</sub> = v<sub>A/G</sub> - v<sub>B/G</sub></span>.</p></div>
+      <div class="readout"><span class="k">Meaning</span><strong id="relMeaning"></strong><p id="relMeaningText"></p></div>
+      <div class="readout emphasis"><span class="k">Teaching cue</span><p id="relCue"></p></div>
+    </aside>
+  </main>
+</section>
+
+<!-- TRAIN LAB -->
+<section id="train" class="tabpane hidden">
+  <main class="layout">
+    <aside class="panel controls">
+      <h2>Train relative-motion lab</h2>
+      <div class="group">
+        <label>Train speed relative to ground <strong id="train2VelLabel"></strong></label><input id="train2Vel" type="range" min="1" max="20" step="0.5" value="12">
+        <label>Passenger speed relative to train <strong id="pass2RelLabel"></strong></label><input id="pass2Rel" type="range" min="-20" max="20" step="0.5" value="-2">
+        <label>Time <strong id="train2TimeLabel"></strong></label><input id="train2Time" type="range" min="0" max="10" step="0.02" value="4">
+      </div>
+      <div class="btncol">
+        <button id="trainSlowBack">Backward slowly</button>
+        <button id="trainJustStationary">Backward at train speed</button>
+        <button id="trainFastBack" class="primary">Backward faster than the train</button>
+      </div>
+    </aside>
+
+    <section class="panel canvas-card">
+      <div class="pills">
+        <div class="pill"><span>passenger / train</span><strong id="trainPillRel"></strong></div>
+        <div class="pill"><span>passenger / ground</span><strong id="trainPillGround"></strong></div>
+        <div class="pill"><span>regime</span><strong id="trainPillRegime"></strong></div>
+      </div>
+      <div class="graph-title">Passenger motion inside a moving train</div>
+      <canvas id="trainCanvas" width="920" height="430"></canvas>
+    </section>
+
+    <aside class="panel readouts">
+      <h2>Interpretation</h2>
+      <div class="readout pink"><span class="k">Ground velocity</span><strong id="trainGroundRead"></strong><p>Compute <span class="eq">v<sub>passenger/G</sub> = v<sub>passenger/train</sub> + v<sub>train/G</sub></span>.</p></div>
+      <div class="readout cream"><span class="k">Regime</span><strong id="trainRegimeRead"></strong><p id="trainRegimeText"></p></div>
+      <div class="readout emphasis"><span class="k">Teaching cue</span><p>The words “forward” and “backward” must always be attached to a chosen reference frame.</p></div>
+    </aside>
+  </main>
+</section>
+
+<!-- PURSUIT -->
+<section id="pursuit" class="tabpane hidden">
+  <main class="layout">
+    <aside class="panel controls">
+      <h2>Catching & separation</h2>
+      <div class="group">
+        <label>Preset</label>
+        <select id="pursuitPreset"><option value="cyclist">Cyclist catching runner</option><option value="opposite">Approaching from opposite directions</option><option value="custom">Custom constant velocities</option></select>
+        <label>Object A initial position <strong id="pAXLabel"></strong></label><input id="pAX" type="range" min="-20" max="120" step="1" value="0">
+        <label>Object B initial position <strong id="pBXLabel"></strong></label><input id="pBX" type="range" min="-20" max="120" step="1" value="60">
+        <label>Object A velocity <strong id="pAVLabel"></strong></label><input id="pAV" type="range" min="-12" max="12" step="0.5" value="8">
+        <label>Object B velocity <strong id="pBVLabel"></strong></label><input id="pBV" type="range" min="-12" max="12" step="0.5" value="5">
+        <label>Time <strong id="pTimeLabel"></strong></label><input id="pTime" type="range" min="0" max="30" step="0.02" value="0">
+      </div>
+      <div class="btnrow"><button id="pJumpMeet">Jump to meeting</button><button id="pReset" class="primary">Reset preset</button></div>
+    </aside>
+
+    <section class="panel canvas-card">
+      <div class="pills">
+        <div class="pill"><span>signed gap s=x<sub>B</sub>-x<sub>A</sub></span><strong id="pillGap"></strong></div>
+        <div class="pill"><span>physical separation |s|</span><strong id="pillSep"></strong></div>
+        <div class="pill"><span>relative velocity v<sub>B/A</sub></span><strong id="pillRelVel"></strong></div>
+      </div>
+      <div class="graph-title">Motion and gap</div>
+      <canvas id="pursuitCanvas" width="920" height="430"></canvas>
+    </section>
+
+    <aside class="panel readouts">
+      <h2>Reasoning</h2>
+      <div class="readout pink"><span class="k">Closing / opening</span><strong id="pClosing"></strong><p id="pClosingText"></p></div>
+      <div class="readout cream"><span class="k">Meeting condition</span><strong id="pMeet"></strong><p>Meeting occurs when <span class="eq">x<sub>A</sub> = x<sub>B</sub></span>, equivalently when the signed gap is zero.</p></div>
+      <div class="readout"><span class="k">Relative velocity</span><strong id="pRelVelRead"></strong><p>Subtract the signed velocities, even when the objects move toward each other.</p></div>
+      <div class="readout emphasis"><span class="k">Teaching cue</span><p id="pCue"></p></div>
+    </aside>
+  </main>
+</section>
+
+<!-- DELAYED START -->
+<section id="delayed" class="tabpane hidden">
+  <main class="layout">
+    <aside class="panel controls">
+      <h2>Delayed-start pursuit</h2>
+      <div class="group">
+        <label>Runner speed <strong id="dRunnerLabel"></strong></label><input id="dRunner" type="range" min="1" max="10" step="0.5" value="5">
+        <label>Cyclist delay before starting <strong id="dDelayLabel"></strong></label><input id="dDelay" type="range" min="0" max="6" step="0.5" value="2">
+        <label>Cyclist acceleration <strong id="dAccelLabel"></strong></label><input id="dAccel" type="range" min="0.5" max="5" step="0.5" value="2">
+        <label>Time measured from cyclist start <strong id="dTimeLabel"></strong></label><input id="dTime" type="range" min="0" max="10" step="0.02" value="0"></div>
+      <div class="btnrow"><button id="dEqualVel">Jump to equal velocities</button><button id="dCatch" class="primary">Jump to catch</button></div>
+    </aside>
+
+    <section class="panel canvas-card">
+      <div class="pills">
+        <div class="pill"><span>runner head start</span><strong id="dHeadStart"></strong></div>
+        <div class="pill"><span>signed gap</span><strong id="dGapPill"></strong></div>
+        <div class="pill"><span>cyclist velocity</span><strong id="dCyclistVelPill"></strong></div>
+      </div>
+      <div class="graph-title">Runner and cyclist</div>
+      <canvas id="delayedCanvas" width="920" height="430"></canvas>
+      <div class="callout">A shared clock matters. Here, <strong>t = 0</strong> is chosen when the cyclist starts accelerating, so the runner already has a head start.</div>
+    </section>
+
+    <aside class="panel readouts">
+      <h2>Critical moments</h2>
+      <div class="readout pink"><span class="k">Equal velocities</span><strong id="dVelMatch"></strong><p id="dVelMatchText"></p></div>
+      <div class="readout cream"><span class="k">Catch</span><strong id="dCatchRead"></strong><p id="dCatchText"></p></div>
+      <div class="readout"><span class="k">Current state</span><strong id="dState"></strong><p id="dStateText"></p></div>
+      <div class="readout emphasis"><span class="k">Teaching cue</span><p>Equal velocities mean the gap is momentarily not changing. Equal positions mean the objects meet.</p></div>
+    </aside>
+  </main>
+</section>
+
+<!-- GRAPHS -->
+<section id="graphs" class="tabpane hidden">
+  <main class="layout">
+    <aside class="panel controls">
+      <h2>Graph scenario</h2>
+      <div class="group">
+        <label>Choose a scenario</label>
+        <select id="graphScenario">
+          <option value="playground">Relative playground</option>
+          <option value="pursuit">Constant-velocity pursuit</option>
+          <option value="delayed">Delayed-start pursuit</option>
+        </select>
+        <label>Graph time <strong id="graphTimeLabel"></strong></label><input id="graphTime" type="range" min="0" max="20" step="0.02" value="0">
+        <label class="check"><input id="graphShowArea" type="checkbox" checked> shade area under relative-velocity graph</label>
+      </div>
+      <div class="group"><div class="small">This tab does not create a new world. It reads the values from the other tabs and displays them as position-time, velocity-time, and relative-velocity graphs.</div></div>
+    </aside>
+
+    <section class="panel canvas-card">
+      <div class="legend"><span><i class="swatch" style="background:#ca82a0"></i>Object / runner A</span><span><i class="swatch" style="background:#684453"></i>Object / runner B</span><span><i class="swatch" style="background:#c59767"></i>relative velocity</span></div>
+      <div class="graph-title">Shared position-time graph</div>
+      <canvas id="graphPosCanvas" width="920" height="270"></canvas>
+      <div class="graph-title">Shared velocity-time graph</div>
+      <canvas id="graphVelCanvas" width="920" height="230"></canvas>
+      <div class="graph-title">Relative velocity and change in gap</div>
+      <canvas id="graphRelCanvas" width="920" height="230"></canvas>
+    </section>
+
+    <aside class="panel readouts">
+      <h2>Graph meaning</h2>
+      <div class="readout pink"><span class="k">Signed gap</span><strong id="graphGapRead"></strong><p>The vertical separation on the position graph gives the signed gap.</p></div>
+      <div class="readout cream"><span class="k">Relative velocity</span><strong id="graphRelRead"></strong><p>The vertical difference on the velocity graph gives the relative velocity.</p></div>
+      <div class="readout"><span class="k">Change in gap</span><strong id="graphAreaRead"></strong><p>Signed area under <span class="eq">v<sub>B/A</sub>(t)</span> gives the change in the signed gap.</p></div>
+      <div class="readout emphasis"><span class="k">Teaching cue</span><p id="graphCue"></p></div>
+    </aside>
+  </main>
+</section>
+
+</div>
+<script src="script.js"></script>
+</body></html>
