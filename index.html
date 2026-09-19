@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Constant Motion Laboratory</title><link rel="stylesheet" href="style.css"></head>
+<body><div class="page">
+<header class="hero"><div class="eyebrow">The Physics Archive · Constant Motion</div>
+<h1>Constant Motion Laboratory</h1>
+<p>Control initial position, initial velocity and constant acceleration. Watch the cart, the velocity graph, and the displacement area update together — including the rectangle + triangle origin of Δx = vᵢt + ½at².</p></header>
+<main class="layout">
+<aside class="panel controls"><h2>Motion controls</h2>
+<div class="group"><h3>Initial state</h3>
+<label>Initial position xᵢ <strong id="xiLabel">0.0 m</strong></label><input id="xi" type="range" min="-8" max="8" step=".5" value="0">
+<label>Initial velocity vᵢ <strong id="viLabel">4.0 m/s</strong></label><input id="vi" type="range" min="-8" max="8" step=".5" value="4">
+<label>Acceleration a <strong id="aLabel">−2.0 m/s²</strong></label><input id="acc" type="range" min="-5" max="5" step=".5" value="-2"></div>
+<div class="group"><h3>Observation time</h3><label>Elapsed time <strong id="tLabel">2.0 s</strong></label><input id="time" type="range" min="0" max="6" step=".02" value="2">
+<label class="check"><input id="showArea" type="checkbox" checked> show v–t displacement area</label>
+<label class="check"><input id="showSplit" type="checkbox" checked> split area into rectangle + triangle</label></div>
+<div class="group"><h3>Quick presets</h3><div class="btncol">
+<button data-preset="constant">Constant velocity</button><button data-preset="slowing">Slowing to a stop</button>
+<button data-preset="reverse">Reverse direction</button><button data-preset="speeding">Speeding up</button></div></div>
+<button id="reset">Reset laboratory</button></aside>
+
+<section class="panel canvas-card">
+<div class="pills"><div class="pill"><span>position</span><strong id="xPill"></strong></div>
+<div class="pill"><span>velocity</span><strong id="vPill"></strong></div><div class="pill"><span>displacement</span><strong id="dxPill"></strong></div></div>
+<div class="graph-title">Physical motion</div><canvas id="track" width="900" height="190"></canvas>
+<div class="graph-title">Velocity–time graph and signed area</div><canvas id="vgraph" width="900" height="340"></canvas>
+<div class="graph-title">Position–time graph</div><canvas id="xgraph" width="900" height="300"></canvas>
+</section>
+
+<aside class="panel readouts"><h2>Live mathematics</h2>
+<div class="readout pink"><span class="k">Velocity update</span><strong id="vfRead"></strong><p>v_f = v_i + at</p></div>
+<div class="readout cream"><span class="k">Average velocity</span><strong id="avgRead"></strong><p>For constant acceleration: v̄ = (v_i + v_f)/2.</p></div>
+<div class="readout"><span class="k">Displacement from area</span><strong id="dxRead"></strong><p id="areaEquation"></p></div>
+<div class="readout"><span class="k">Final position</span><strong id="xfRead"></strong><p>x_f = x_i + Δx.</p></div>
+<div class="readout"><span class="k">Time-eliminated relation</span><strong id="noTimeRead"></strong><p>v_f² = v_i² + 2aΔx. Squaring does not retain the sign of velocity.</p></div>
+<div class="readout emphasis"><span class="k">Teaching cue</span><p id="cue"></p></div>
+</aside>
+</main></div><script src="script.js"></script></body></html>
