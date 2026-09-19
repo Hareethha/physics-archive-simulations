@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Multi-Stage Motion Builder</title><link rel="stylesheet" href="style.css"></head>
+<body><div class="page">
+<header class="hero"><div class="eyebrow">The Physics Archive · Multi-stage Kinematics</div>
+<h1>Multi-Stage Motion Builder</h1>
+<p>Build a journey from separate constant-acceleration stages. The final position and velocity of one stage automatically become the initial state of the next, while the full velocity graph and total displacement are assembled live.</p></header>
+
+<div class="stage-grid">
+<section class="stage-card"><h3>Stage 1 · Accelerate</h3><label>Acceleration a₁ <strong id="a1Label"></strong></label><input id="a1" type="range" min="-5" max="5" step=".5" value="2">
+<label>Duration t₁ <strong id="t1Label"></strong></label><input id="t1" type="range" min=".5" max="6" step=".5" value="4"><div class="mini" id="s1Summary"></div></section>
+<section class="stage-card"><h3>Stage 2 · Cruise / change</h3><label>Acceleration a₂ <strong id="a2Label"></strong></label><input id="a2" type="range" min="-5" max="5" step=".5" value="0">
+<label>Duration t₂ <strong id="t2Label"></strong></label><input id="t2" type="range" min=".5" max="6" step=".5" value="3"><div class="mini" id="s2Summary"></div></section>
+<section class="stage-card"><h3>Stage 3 · Brake / change</h3><label>Acceleration a₃ <strong id="a3Label"></strong></label><input id="a3" type="range" min="-6" max="6" step=".5" value="-4">
+<label>Duration t₃ <strong id="t3Label"></strong></label><input id="t3" type="range" min=".5" max="6" step=".5" value="2"><div class="mini" id="s3Summary"></div></section>
+</div>
+
+<div class="flow">
+<div class="node">Start: <strong id="startNode">x=0, v=0</strong></div><div class="arrow">→</div>
+<div class="node">after stage 1: <strong id="node1"></strong></div><div class="arrow">→</div>
+<div class="node">after stage 2: <strong id="node2"></strong></div><div class="arrow">→</div>
+<div class="node">after stage 3: <strong id="node3"></strong></div>
+</div>
+
+<main class="layout">
+<aside class="panel controls"><h2>Journey controls</h2>
+<div class="group"><h3>Initial state</h3><label>Initial position x₀ <strong id="x0Label"></strong></label><input id="x0" type="range" min="-10" max="10" step=".5" value="0">
+<label>Initial velocity v₀ <strong id="v0Label"></strong></label><input id="v0" type="range" min="-5" max="10" step=".5" value="0"></div>
+<div class="group"><h3>Preset</h3><button id="cyclist" class="primary">Cyclist: accelerate → cruise → brake</button><p class="note">2 m/s² for 4 s, then 3 s at constant velocity, then −4 m/s² for 2 s.</p></div>
+<div class="group"><h3>Display</h3><label class="check"><input id="showAreas" type="checkbox" checked> shade stage displacement areas</label><label class="check"><input id="showPosition" type="checkbox" checked> show position graph</label></div>
+<button id="reset">Reset builder</button></aside>
+
+<section class="panel canvas-card">
+<div class="pills"><div class="pill"><span>total time</span><strong id="timePill"></strong></div><div class="pill"><span>total displacement</span><strong id="dxPill"></strong></div><div class="pill"><span>final velocity</span><strong id="vfPill"></strong></div></div>
+<div class="graph-title">Velocity–time graph by stage</div><canvas id="vgraph" width="900" height="390"></canvas>
+<div id="positionWrap"><div class="graph-title">Position–time graph</div><canvas id="xgraph" width="900" height="330"></canvas></div>
+</section>
+
+<aside class="panel readouts"><h2>Journey totals</h2>
+<div class="readout pink"><span class="k">Stage displacements</span><strong id="stageDx"></strong><p>Add each stage separately because acceleration changes between stages.</p></div>
+<div class="readout cream"><span class="k">Total displacement</span><strong id="totalDx"></strong><p id="distanceText"></p></div>
+<div class="readout"><span class="k">Overall average velocity</span><strong id="avgV"></strong><p>Δx_total / t_total — not simply the arithmetic mean of initial and final velocities when acceleration changes.</p></div>
+<div class="readout"><span class="k">Overall average acceleration</span><strong id="avgA"></strong><p>(v_final − v_initial)/t_total. This does not imply acceleration was constant.</p></div>
+<div class="readout emphasis"><span class="k">Teaching cue</span><p id="cue"></p></div>
+</aside>
+</main></div><script src="script.js"></script></body></html>
