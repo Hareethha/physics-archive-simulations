@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kinematics Equation & Reasoning Laboratory</title><link rel="stylesheet" href="style.css"></head>
+<body><div class="page">
+<header class="hero"><div class="eyebrow">The Physics Archive · Constant Acceleration</div>
+<h1>Equation & Reasoning Laboratory</h1>
+<p>Choose equations deliberately, explore stopping-distance scaling, and see how one quadratic can describe two different visits to the same position.</p></header>
+
+<nav class="tabs"><button class="tab active" data-tab="chooser">Equation Chooser</button>
+<button class="tab" data-tab="braking">Braking Scaling</button><button class="tab" data-tab="quadratic">Same Position Twice</button></nav>
+
+<section id="chooser" class="tabpane">
+<main class="layout">
+<aside class="panel controls"><h2>What is known?</h2>
+<div class="group"><p class="note">Select the quantities the question gives, then choose the requested unknown.</p>
+<div class="chips" id="knownChips">
+<button class="chip on" data-q="vi">vᵢ</button><button class="chip on" data-q="a">a</button>
+<button class="chip on" data-q="dx">Δx</button><button class="chip" data-q="vf">v_f</button><button class="chip" data-q="t">t</button>
+</div>
+<label>Requested unknown</label><select id="target"><option value="vf">final velocity v_f</option><option value="dx">displacement Δx</option><option value="vi">initial velocity v_i</option><option value="a">acceleration a</option><option value="t">time t</option></select></div>
+<div class="group"><h3>Constant acceleration?</h3><label class="check"><input id="constantA" type="checkbox" checked> yes, over this interval</label></div>
+</aside>
+<section class="panel canvas-card"><h2>Equation map</h2><canvas id="chooserCanvas" width="900" height="520"></canvas></section>
+<aside class="panel readouts"><h2>Recommended relationship</h2>
+<div class="readout pink"><span class="k">Direct choice</span><strong id="choiceEq"></strong><p id="choiceWhy"></p></div>
+<div class="readout cream"><span class="k">Assumption</span><strong id="assumption"></strong><p>All five relationships require constant acceleration over the chosen interval, including a = 0.</p></div>
+<div class="readout emphasis"><span class="k">Teaching cue</span><p>Prefer an equation that connects the known quantities and the requested unknown without introducing an unnecessary extra unknown.</p></div>
+</aside></main></section>
+
+<section id="braking" class="tabpane hidden">
+<main class="layout">
+<aside class="panel controls"><h2>Braking controls</h2>
+<div class="group"><label>Initial speed u <strong id="uLabel">20 m/s</strong></label><input id="u" type="range" min="5" max="40" step="1" value="20">
+<label>Braking magnitude b <strong id="bLabel">5 m/s²</strong></label><input id="b" type="range" min="1" max="10" step=".5" value="5"></div>
+<div class="btncol"><button id="doubleSpeed">Double speed</button><button id="halfBraking">Halve braking magnitude</button><button id="brakeReset">Reset</button></div></aside>
+<section class="panel canvas-card"><div class="pills"><div class="pill"><span>stopping time</span><strong id="tStopPill"></strong></div><div class="pill"><span>stopping distance</span><strong id="dStopPill"></strong></div></div>
+<div class="graph-title">Velocity–time stopping triangle</div><canvas id="brakeGraph" width="900" height="430"></canvas></section>
+<aside class="panel readouts"><h2>Scaling</h2>
+<div class="readout pink"><span class="k">Stopping time</span><strong id="tStopRead"></strong><p>t_stop = u/b — linear in u when b is fixed.</p></div>
+<div class="readout cream"><span class="k">Stopping distance</span><strong id="dStopRead"></strong><p>d = u²/(2b) — quadratic in u when b is fixed.</p></div>
+<div class="readout emphasis"><span class="k">Comparison</span><p id="scaleCue"></p></div>
+</aside></main></section>
+
+<section id="quadratic" class="tabpane hidden">
+<main class="layout">
+<aside class="panel controls"><h2>Motion setup</h2>
+<div class="group"><p class="note">Fixed example: xᵢ=0, vᵢ=+6 m/s, a=−2 m/s².</p>
+<label>Target position <strong id="targetXLabel">8.0 m</strong></label><input id="targetX" type="range" min="0" max="9" step=".1" value="8"></div>
+<button id="quadReset">Reset target</button></aside>
+<section class="panel canvas-card"><div class="graph-title">Position–time graph</div><canvas id="quadGraph" width="900" height="500"></canvas></section>
+<aside class="panel readouts"><h2>Quadratic roots</h2>
+<div class="readout pink"><span class="k">Times at target</span><strong id="rootsRead"></strong><p id="rootVelocities"></p></div>
+<div class="readout cream"><span class="k">Turning point</span><strong>t = 3.00 s, x = 9.00 m</strong><p>v = 0 at the top of the position parabola.</p></div>
+<div class="readout"><span class="k">Distance by second visit</span><strong id="distanceRead"></strong><p>Distance must be split at the turning point when the cart reverses.</p></div>
+<div class="readout emphasis"><span class="k">Teaching cue</span><p id="quadCue"></p></div>
+</aside></main></section>
+
+<script src="script.js"></script></body></html>
