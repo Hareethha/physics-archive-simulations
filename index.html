@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projectile Motion Master Laboratory</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <div class="eyebrow">The Physics Archive · 2D Motion</div>
+    <h1>Projectile Motion Master Laboratory</h1>
+    <p>One integrated simulation for independent components, horizontal launch, angled launch, complementary angles, unequal heights, and synchronized graphs.</p>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="independent">Independent Components</button>
+    <button class="tab" data-tab="builder">Projectile Builder</button>
+    <button class="tab" data-tab="horizontal">Horizontal Launch</button>
+    <button class="tab" data-tab="angle">Angle & Range</button>
+    <button class="tab" data-tab="unequal">Unequal Heights</button>
+    <button class="tab" data-tab="graphs">Graph Lab</button>
+  </nav>
+
+  <section class="transport">
+    <div class="transport-main">
+      <span class="transport-title">Animation</span>
+      <button id="transportRestart" type="button">↺ Restart</button>
+      <button id="transportPlay" class="primary" type="button">▶ Play</button>
+      <label class="inline-control">Speed
+        <select id="transportSpeed">
+          <option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option>
+          <option value="2">2×</option>
+        </select>
+      </label>
+      <span class="mode-badge" id="transportMode">Independent Components</span>
+    </div>
+    <div class="transport-main transport-secondary">
+      <label class="inline-control example-control">Worked example
+        <select id="workedExample">
+          <option value="">Choose an example…</option>
+          <option value="horizontal-notes">Horizontal table: 3.0 m/s from 1.25 m</option>
+          <option value="angled-notes">Angled launch: 20.0 m/s at 30°</option>
+          <option value="cliff-notes">Cliff: v₀ₓ=14.7, v₀ᵧ=9.8, height=19.6 m</option>
+        </select>
+      </label>
+      <button id="loadExample" type="button">Load example</button>
+      <button id="equationToggle" type="button">Show equations</button>
+    </div>
+  </section>
+
+  <section id="equationPanel" class="equation-panel hidden" aria-live="polite">
+    <div class="equation-head">
+      <div>
+        <div class="eyebrow">Current mathematics</div>
+        <h2 id="equationTitle">Independent components</h2>
+      </div>
+      <button id="equationClose" type="button">Hide</button>
+    </div>
+    <div id="equationBody" class="equation-grid"></div>
+  </section>
+
+  <section id="independent" class="tabpane">
+    <main class="layout">
+      <aside class="panel controls">
+        <h2>Independent components</h2>
+        <div class="group">
+          <label>Initial height <strong id="indHeightLabel"></strong></label>
+          <input id="indHeight" type="range" min="1" max="20" step="0.5" value="10">
+          <label>Horizontal launch speed for Ball B <strong id="indVxLabel"></strong></label>
+          <input id="indVx" type="range" min="0" max="20" step="0.5" value="8">
+          <label>Gravity <strong id="indGLabel"></strong></label>
+          <input id="indG" type="range" min="1" max="20" step="0.1" value="9.8">
+          <label>Time <strong id="indTimeLabel"></strong></label>
+          <input id="indTime" type="range" min="0" max="3" step="0.01" value="0.8">
+        </div>
+        <div class="btnrow">
+          <button id="indReset" class="primary">Reset</button>
+          <button id="indLanding">Jump to landing</button>
+        </div>
+      </aside>
+      <section class="panel canvas-card">
+        <div class="pills">
+          <div class="pill"><span>Ball A (drop)</span><strong id="indBallA"></strong></div>
+          <div class="pill"><span>Ball B (launched)</span><strong id="indBallB"></strong></div>
+          <div class="pill"><span>Vertical equality</span><strong id="indVerticalSame"></strong></div>
+        </div>
+        <div class="graph-title">Dropped ball and horizontally launched ball</div>
+        <canvas id="indCanvas" width="920" height="430"></canvas>
+        <div class="callout">Both balls share the same vertical motion because they start with the same vertical velocity and acceleration. Ball B only has extra horizontal motion.</div>
+      </section>
+      <aside class="panel readouts">
+        <h2>Interpretation</h2>
+        <div class="readout pink"><span class="k">Vertical position</span><strong id="indYRead"></strong><p>The two balls remain at the same vertical height at every equal time.</p></div>
+        <div class="readout cream"><span class="k">Horizontal position</span><strong id="indXRead"></strong><p>Only Ball B changes its horizontal position.</p></div>
+        <div class="readout emphasis"><span class="k">Teaching cue</span><p>Changing horizontal launch speed does not change the fall time when the initial height and vertical velocity are unchanged.</p></div>
+      </aside>
+    </main>
+  </section>
+
+  <section id="builder" class="tabpane hidden">
+    <main class="layout">
+      <aside class="panel controls">
+        <h2>Projectile builder</h2>
+        <div class="group">
+          <label>Launch speed <strong id="bV0Label"></strong></label><input id="bV0" type="range" min="1" max="30" step="0.5" value="20">
+          <label>Launch angle <strong id="bThetaLabel"></strong></label><input id="bTheta" type="range" min="0" max="85" step="1" value="35">
+          <label>Initial height <strong id="bY0Label"></strong></label><input id="bY0" type="range" min="0" max="20" step="0.5" value="0">
+          <label>Gravity <strong id="bGLabel"></strong></label><input id="bG" type="range" min="1" max="20" step="0.1" value="9.8">
+          <label>Time <strong id="bTimeLabel"></strong></label><input id="bTime" type="range" min="0" max="5" step="0.01" value="1.1">
+        </div>
+        <div class="btnrow"><button id="bReset" class="primary">Reset</button><button id="bApex">Jump to apex</button></div>
+      </aside>
+      <section class="panel canvas-card">
+        <div class="pills">
+          <div class="pill"><span>v₀ₓ</span><strong id="bVxPill"></strong></div>
+          <div class="pill"><span>v₀ᵧ</span><strong id="bVyPill"></strong></div>
+          <div class="pill"><span>Current speed</span><strong id="bSpeedPill"></strong></div>
+        </div>
+        <div class="graph-title">Projectile on a 2D coordinate plane</div>
+        <canvas id="builderCanvas" width="920" height="430"></canvas>
+      </section>
+      <aside class="panel readouts">
+        <h2>Live quantities</h2>
+        <div class="readout pink"><span class="k">Position</span><strong id="bPosRead"></strong><p>x and y must be read at the same time.</p></div>
+        <div class="readout cream"><span class="k">Velocity components</span><strong id="bVelRead"></strong><p>vₓ stays constant while vᵧ changes linearly with time.</p></div>
+        <div class="readout"><span class="k">Equations</span><strong id="bEqRead"></strong><p>Split into horizontal and vertical equations before solving.</p></div>
+      </aside>
+    </main>
+  </section>
+
+  <section id="horizontal" class="tabpane hidden">
+    <main class="layout">
+      <aside class="panel controls">
+        <h2>Horizontal launch</h2>
+        <div class="group">
+          <label>Horizontal speed <strong id="hVxLabel"></strong></label><input id="hVx" type="range" min="0.5" max="10" step="0.1" value="3.0">
+          <label>Table height <strong id="hHeightLabel"></strong></label><input id="hHeight" type="range" min="0.5" max="5" step="0.05" value="1.25">
+          <label>Gravity <strong id="hGLabel"></strong></label><input id="hG" type="range" min="1" max="20" step="0.1" value="9.8">
+          <label>Time <strong id="hTimeLabel"></strong></label><input id="hTime" type="range" min="0" max="2" step="0.01" value="0.3">
+        </div>
+        <div class="btnrow"><button id="hReset" class="primary">Reset</button><button id="hLanding">Jump to impact</button></div>
+      </aside>
+      <section class="panel canvas-card">
+        <div class="pills">
+          <div class="pill"><span>Flight time</span><strong id="hTimePill"></strong></div>
+          <div class="pill"><span>Range</span><strong id="hRangePill"></strong></div>
+          <div class="pill"><span>Impact speed</span><strong id="hImpactPill"></strong></div>
+        </div>
+        <div class="graph-title">Tabletop launch</div>
+        <canvas id="horizontalCanvas" width="920" height="430"></canvas>
+      </section>
+      <aside class="panel readouts">
+        <h2>Reasoning</h2>
+        <div class="readout pink"><span class="k">Step 1</span><strong id="hStep1"></strong><p>Vertical motion determines the flight time.</p></div>
+        <div class="readout cream"><span class="k">Step 2</span><strong id="hStep2"></strong><p>Use the same time in the horizontal equation.</p></div>
+        <div class="readout"><span class="k">Impact components</span><strong id="hStep3"></strong><p>Combine components only when asked for total speed or direction.</p></div>
+      </aside>
+    </main>
+  </section>
+
+  <section id="angle" class="tabpane hidden">
+    <main class="layout">
+      <aside class="panel controls">
+        <h2>Angle & range explorer</h2>
+        <div class="group">
+          <label>Launch speed <strong id="aV0Label"></strong></label><input id="aV0" type="range" min="1" max="30" step="0.5" value="20">
+          <label>Launch angle <strong id="aThetaLabel"></strong></label><input id="aTheta" type="range" min="5" max="85" step="1" value="30">
+          <label>Gravity <strong id="aGLabel"></strong></label><input id="aG" type="range" min="1" max="20" step="0.1" value="9.8">
+          <label class="check"><input id="aCompare" type="checkbox" checked> compare with complementary angle</label>
+          <label>Time <strong id="aTimeLabel"></strong></label><input id="aTime" type="range" min="0" max="5" step="0.01" value="0.7">
+        </div>
+        <div class="btnrow"><button id="aReset" class="primary">Reset</button><button id="aApex">Jump to apex</button></div>
+      </aside>
+      <section class="panel canvas-card">
+        <div class="pills">
+          <div class="pill"><span>Main range</span><strong id="aRangePill"></strong></div>
+          <div class="pill"><span>Main max height</span><strong id="aHeightPill"></strong></div>
+          <div class="pill"><span>Main flight time</span><strong id="aFlightPill"></strong></div>
+        </div>
+        <div class="graph-title">Main trajectory and complementary-angle comparison</div>
+        <canvas id="angleCanvas" width="920" height="430"></canvas>
+      </section>
+      <aside class="panel readouts">
+        <h2>Interpretation</h2>
+        <div class="readout pink"><span class="k">At the top</span><strong id="aTopRead"></strong><p>At the apex, vᵧ = 0 but vₓ remains nonzero.</p></div>
+        <div class="readout cream"><span class="k">Complementary angles</span><strong id="aCompRead"></strong><p id="aCompText"></p></div>
+        <div class="readout"><span class="k">Derived formulas</span><strong id="aFormulaRead"></strong><p>These equal-height formulas apply only when launch and landing heights match.</p></div>
+      </aside>
+    </main>
+  </section>
+
+  <section id="unequal" class="tabpane hidden">
+    <main class="layout">
+      <aside class="panel controls">
+        <h2>Unequal heights</h2>
+        <div class="group">
+          <label>Initial v₀ₓ <strong id="uVxLabel"></strong></label><input id="uVx" type="range" min="1" max="25" step="0.1" value="14.7">
+          <label>Initial v₀ᵧ <strong id="uVyLabel"></strong></label><input id="uVy" type="range" min="0" max="20" step="0.1" value="9.8">
+          <label>Cliff height <strong id="uHeightLabel"></strong></label><input id="uHeight" type="range" min="1" max="30" step="0.1" value="19.6">
+          <label>Gravity <strong id="uGLabel"></strong></label><input id="uG" type="range" min="1" max="20" step="0.1" value="9.8">
+          <label>Time <strong id="uTimeLabel"></strong></label><input id="uTime" type="range" min="0" max="6" step="0.01" value="1.0">
+        </div>
+        <div class="btnrow"><button id="uReset" class="primary">Reset</button><button id="uLanding">Jump to ground</button></div>
+      </aside>
+      <section class="panel canvas-card">
+        <div class="pills">
+          <div class="pill"><span>Time to top</span><strong id="uTopPill"></strong></div>
+          <div class="pill"><span>Return to launch level</span><strong id="uReturnPill"></strong></div>
+          <div class="pill"><span>Ground impact time</span><strong id="uGroundPill"></strong></div>
+        </div>
+        <div class="graph-title">Projectile launched from a cliff</div>
+        <canvas id="unequalCanvas" width="920" height="430"></canvas>
+      </section>
+      <aside class="panel readouts">
+        <h2>Interpretation</h2>
+        <div class="readout pink"><span class="k">Critical event</span><strong id="uEventRead"></strong><p>Use the actual landing level to determine the real flight time.</p></div>
+        <div class="readout cream"><span class="k">Impact state</span><strong id="uImpactRead"></strong><p>Impact direction comes from the velocity components at landing.</p></div>
+        <div class="readout emphasis"><span class="k">Teaching cue</span><p>Doubling the time to the top only gives the return time to launch height, not the time to the lower ground.</p></div>
+      </aside>
+    </main>
+  </section>
+
+  <section id="graphs" class="tabpane hidden">
+    <main class="layout graph-layout">
+      <aside class="panel controls">
+        <h2>Graph lab</h2>
+        <div class="group">
+          <label>Use parameters from</label>
+          <select id="gScenario">
+            <option value="builder">Projectile Builder</option>
+            <option value="horizontal">Horizontal Launch</option>
+            <option value="angle">Angle & Range</option>
+            <option value="unequal">Unequal Heights</option>
+          </select>
+          <label>Time <strong id="gTimeLabel"></strong></label><input id="gTime" type="range" min="0" max="5" step="0.01" value="1.0">
+        </div>
+        <div class="group"><div class="small">Trajectory means y versus x. Time graphs mean x versus t, y versus t, vₓ versus t, vᵧ versus t, and acceleration versus t.</div></div>
+      </aside>
+      <section class="panel canvas-card biggraphs">
+        <div class="graph-title">Trajectory: y versus x</div>
+        <canvas id="gTraj" width="920" height="210"></canvas>
+        <div class="graph-title">x versus t</div>
+        <canvas id="gX" width="920" height="170"></canvas>
+        <div class="graph-title">y versus t</div>
+        <canvas id="gY" width="920" height="170"></canvas>
+        <div class="graph-title">vₓ versus t and vᵧ versus t</div>
+        <canvas id="gV" width="920" height="210"></canvas>
+        <div class="graph-title">aₓ versus t and aᵧ versus t</div>
+        <canvas id="gA" width="920" height="170"></canvas>
+      </section>
+      <aside class="panel readouts">
+        <h2>Graph meaning</h2>
+        <div class="readout pink"><span class="k">Current state</span><strong id="gState"></strong><p>The highlighted point corresponds to the same instant across every graph.</p></div>
+        <div class="readout cream"><span class="k">Distinction</span><strong id="gDistinction"></strong><p>The slope of the trajectory graph is dy/dx = vᵧ/vₓ, not velocity itself.</p></div>
+        <div class="readout"><span class="k">Areas</span><strong id="gArea"></strong><p>Area under vₓ gives horizontal displacement. Area under vᵧ gives vertical displacement.</p></div>
+      </aside>
+    </main>
+  </section>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
