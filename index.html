@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Fall & Sign Convention Lab</title><link rel="stylesheet" href="style.css"></head>
+<body><div class="page">
+<header class="hero"><div class="eyebrow">The Physics Archive · Free Fall</div>
+<h1>Free Fall & Sign Convention Lab</h1>
+<p>Separate the direction of motion from the direction of gravity. Change the coordinate convention, compare dropped and thrown objects, and watch position, velocity and acceleration update consistently.</p></header>
+
+<nav class="tabs"><button class="tab active" data-tab="single">Single Object</button><button class="tab" data-tab="compare">Two-Ball Comparison</button></nav>
+
+<section id="single" class="tabpane">
+<main class="layout">
+<aside class="panel controls"><h2>Controls</h2>
+<div class="group"><h3>Coordinate convention</h3>
+<select id="positiveDir"><option value="up">Upward is positive</option><option value="down">Downward is positive</option></select>
+<label>Origin height above ground <strong id="originLabel">19.6 m</strong></label><input id="originHeight" type="range" min="5" max="30" step=".1" value="19.6"></div>
+<div class="group"><h3>Launch mode</h3>
+<select id="launchMode"><option value="drop">Dropped from rest</option><option value="down">Thrown downward</option><option value="up">Thrown upward</option></select>
+<label>Launch speed <strong id="speedLabel">0.0 m/s</strong></label><input id="speed" type="range" min="0" max="20" step=".1" value="0">
+<label>Elapsed time <strong id="timeLabel">0.00 s</strong></label><input id="time" type="range" min="0" max="4" step=".01" value="0"></div>
+<div class="btnrow"><button id="toImpact" class="primary">Jump to impact</button><button id="reset">Reset</button></div>
+</aside>
+
+<section class="panel canvas-card">
+<div class="pills"><div class="pill"><span>position</span><strong id="yPill"></strong></div><div class="pill"><span>velocity</span><strong id="vPill"></strong></div><div class="pill"><span>acceleration</span><strong id="aPill"></strong></div></div>
+<div class="graph-title">Vertical motion</div><canvas id="track" width="900" height="540"></canvas>
+<div class="graph-title">Velocity and acceleration</div><canvas id="vaGraph" width="900" height="330"></canvas>
+</section>
+
+<aside class="panel readouts"><h2>Live interpretation</h2>
+<div class="readout pink"><span class="k">Chosen signs</span><strong id="signRead"></strong><p id="signText"></p></div>
+<div class="readout cream"><span class="k">Velocity</span><strong id="velRead"></strong><p id="velText"></p></div>
+<div class="readout"><span class="k">Acceleration</span><strong id="accRead"></strong><p>Gravity keeps the same physical direction throughout free fall.</p></div>
+<div class="readout"><span class="k">Kinematic equation</span><strong id="eqRead"></strong><p id="eqText"></p></div>
+<div class="readout emphasis"><span class="k">Teaching cue</span><p id="cue"></p></div>
+</aside>
+</main></section>
+
+<section id="compare" class="tabpane hidden">
+<main class="layout">
+<aside class="panel controls"><h2>Two-ball setup</h2>
+<div class="group"><p class="note">Both balls start 19.6 m above the ground with the same acceleration.</p>
+<label>Ball B downward speed <strong id="bSpeedLabel">4.9 m/s</strong></label><input id="bSpeed" type="range" min="0" max="12" step=".1" value="4.9">
+<label>Elapsed time <strong id="compareTimeLabel">0.00 s</strong></label><input id="compareTime" type="range" min="0" max="2" step=".01" value="0"></div>
+<div class="btnrow"><button id="compareImpact" class="primary">Show both impacts</button><button id="compareReset">Reset</button></div>
+</aside>
+<section class="panel canvas-card">
+<div class="legend"><span><i class="swatch" style="background:#ca82a0"></i>Ball A: dropped</span><span><i class="swatch" style="background:#684453"></i>Ball B: thrown downward</span></div>
+<canvas id="compareTrack" width="900" height="560"></canvas>
+</section>
+<aside class="panel readouts"><h2>Comparison</h2>
+<div class="readout pink"><span class="k">Ball A</span><strong id="aState"></strong><p>Initial velocity = 0.</p></div>
+<div class="readout cream"><span class="k">Ball B</span><strong id="bState"></strong><p id="bInitial"></p></div>
+<div class="readout"><span class="k">Acceleration</span><strong>a_A = a_B = −9.8 m/s²</strong><p>Ball B arrives sooner because it already has downward velocity.</p></div>
+<div class="readout emphasis"><span class="k">Teaching cue</span><p id="compareCue"></p></div>
+</aside>
+</main></section>
+
+<script src="script.js"></script></body></html>
